@@ -1,0 +1,16 @@
+linters-settings:
+    golint:
+        min-confidence: 0.1
+    goimports:
+        local-prefixes: github.com/sagikazarmark/protoc-gen-kit
+
+linters:
+    enable-all: true
+    disable:
+        - maligned
+        - funlen
+        - dupl
+        - wsl
+
+service:
+    golangci-lint-version: 1.20.x
