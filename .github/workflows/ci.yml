@@ -6,14 +6,13 @@ on:
       - master
   pull_request:
 
-env:
-  VERBOSE: 1
-  GOFLAGS: -mod=readonly
-
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      VERBOSE: 1
+      GOFLAGS: -mod=readonly
 
     steps:
       - name: Set up Go
@@ -30,6 +29,9 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      VERBOSE: 1
+      GOFLAGS: -mod=readonly
 
     steps:
       - name: Set up Go
@@ -46,6 +48,9 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    env:
+      VERBOSE: 1
+      GOFLAGS: -mod=readonly
 
     steps:
       - name: Set up Go
