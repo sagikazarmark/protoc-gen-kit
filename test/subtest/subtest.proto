@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package test.v1.subtest;
+
+option csharp_namespace = "Test.V1.Subtest";
+option go_package = "github.com/sagikazarmark/protoc-gen-kit/test/subtest;subtestv1";
+option java_multiple_files = true;
+option java_outer_classname = "TestListProto";
+option java_package = "com.test.v1";
+option objc_class_prefix = "TXX";
+option php_namespace = "Test\\V1";
+
+message SubtestProcedureRequest {
+}
+
+message SubtestProcedureResponse {
+}
