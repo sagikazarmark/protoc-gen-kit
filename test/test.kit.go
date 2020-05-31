@@ -16,6 +16,7 @@ type TestServiceKitServer struct {
 	SubestProcedureHandler grpc.Handler
 }
 
+// TestProcedure is here for the sake of testing comments.
 func (s TestServiceKitServer) TestProcedure(ctx context.Context, req *TestProcedureRequest) (*TestProcedureResponse, error) {
 	_, resp, err := s.TestProcedureHandler.ServeGRPC(ctx, req)
 	if err != nil {

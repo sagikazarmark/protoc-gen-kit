@@ -13,6 +13,7 @@ option php_namespace = "Test\\V1";
 import "subtest/subtest.proto";
 
 service TestService {
+    // TestProcedure is here for the sake of testing comments.
     rpc TestProcedure (TestProcedureRequest) returns (TestProcedureResponse);
     rpc SubestProcedure (test.v1.subtest.SubtestProcedureRequest) returns (test.v1.subtest.SubtestProcedureResponse);
 }

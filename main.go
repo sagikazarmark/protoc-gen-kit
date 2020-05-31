@@ -77,13 +77,13 @@ func genService(g *protogen.GeneratedFile, service *protogen.Service) {
 		if method.Desc.Options().(*descriptorpb.MethodOptions).GetDeprecated() {
 			g.P(deprecationComment)
 		}
-		g.P(method.Comments.Leading, method.GoName, "Handler ", g.QualifiedGoIdent(kitgrpcPackage.Ident("Handler")))
+		g.P(method.GoName, "Handler ", g.QualifiedGoIdent(kitgrpcPackage.Ident("Handler")))
 	}
 	g.P("}")
 	g.P()
 
 	for _, method := range service.Methods {
-		g.P("func (s ", serverName, ") ", serverSignature(g, method), "{")
+		g.P(method.Comments.Leading, "func (s ", serverName, ") ", serverSignature(g, method), "{")
 		g.P("_, resp, err := s.", method.GoName, "Handler.ServeGRPC(ctx, req)")
 		g.P("if err != nil {")
 		g.P("return nil, err")
