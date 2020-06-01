@@ -4,16 +4,24 @@ package testv1
 
 import (
 	context "context"
-	grpc "github.com/go-kit/kit/transport/grpc"
 	subtest "github.com/sagikazarmark/protoc-gen-kit/test/subtest"
 )
+
+// TestServiceHandler which should be called from the gRPC binding of the service
+// implementation. The incoming request parameter, and returned response
+// parameter, are both gRPC types, not user-domain.
+//
+// This interface is based on github.com/go-kit/kit/transport/grpc.Handler.
+type TestServiceHandler interface {
+	ServeGRPC(ctx context.Context, request interface{}) (context.Context, interface{}, error)
+}
 
 // TestServiceKitServer is the Go kit server implementation for TestService service.
 type TestServiceKitServer struct {
 	*UnimplementedTestServiceServer
 
-	TestProcedureHandler   grpc.Handler
-	SubestProcedureHandler grpc.Handler
+	TestProcedureHandler   TestServiceHandler
+	SubestProcedureHandler TestServiceHandler
 }
 
 // TestProcedure is here for the sake of testing comments.

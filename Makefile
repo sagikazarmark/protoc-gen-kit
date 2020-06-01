@@ -22,6 +22,10 @@ bin/protoc-gen-go: go.mod
 	@mkdir -p bin
 	go build -o bin/protoc-gen-go google.golang.org/protobuf/cmd/protoc-gen-go
 
+bin/protoc-gen-go-grpc: gotools.mod
+	@mkdir -p bin
+	go build -modfile gotools.mod -o bin/protoc-gen-go-grpc google.golang.org/grpc/cmd/protoc-gen-go-grpc
+
 .PHONY: testproto
-testproto: bin/protoc bin/protoc-gen-go build
-	protoc -I bin/protoc-${PROTOC_VERSION} -I test --plugin=build/protoc-gen-kit --go_out=paths=source_relative:test/ --kit_out=paths=source_relative:test/ test/test.proto test/subtest/subtest.proto
+testproto: bin/protoc bin/protoc-gen-go bin/protoc-gen-go-grpc build
+	protoc -I bin/protoc-${PROTOC_VERSION} -I test --plugin=build/protoc-gen-kit --go_out=paths=source_relative:test/ --go-grpc_out=paths=source_relative:test/ --kit_out=paths=source_relative:test/ test/test.proto test/subtest/subtest.proto

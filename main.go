@@ -11,7 +11,6 @@ const deprecationComment = "// Deprecated: Do not use."
 
 const (
 	contextPackage = protogen.GoImportPath("context")
-	kitgrpcPackage = protogen.GoImportPath("github.com/go-kit/kit/transport/grpc")
 )
 
 func main() {
@@ -58,6 +57,19 @@ func generateFileContent(file *protogen.File, g *protogen.GeneratedFile) {
 }
 
 func genService(g *protogen.GeneratedFile, service *protogen.Service) {
+	handlerName := service.GoName + "Handler"
+
+	g.Annotate(handlerName, service.Location)
+
+	g.P("// ", handlerName, " which should be called from the gRPC binding of the service")
+	g.P("// implementation. The incoming request parameter, and returned response")
+	g.P("// parameter, are both gRPC types, not user-domain.")
+	g.P("//")
+	g.P("// This interface is based on github.com/go-kit/kit/transport/grpc.Handler.")
+	g.P("type ", handlerName, " interface {")
+	g.P("ServeGRPC(ctx ", g.QualifiedGoIdent(contextPackage.Ident("Context")), ", request interface{}) (", g.QualifiedGoIdent(contextPackage.Ident("Context")), ", interface{}, error)") // nolint: lll
+	g.P("}")
+
 	serverName := service.GoName + "KitServer"
 
 	g.P("// ", serverName, " is the Go kit server implementation for ", service.GoName, " service.")
@@ -77,7 +89,7 @@ func genService(g *protogen.GeneratedFile, service *protogen.Service) {
 		if method.Desc.Options().(*descriptorpb.MethodOptions).GetDeprecated() {
 			g.P(deprecationComment)
 		}
-		g.P(method.GoName, "Handler ", g.QualifiedGoIdent(kitgrpcPackage.Ident("Handler")))
+		g.P(method.GoName, "Handler ", handlerName)
 	}
 	g.P("}")
 	g.P()
