@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- The Go kit [gRPC handler](https://github.com/go-kit/kit/blob/81a2d1f/transport/grpc/server.go#L14-L19) is now generated to avoid importing Go kit itself in the generated code.
+
 
 ## [0.1.1] - 2020-06-01
 
