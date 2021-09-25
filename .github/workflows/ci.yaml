@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v14
+        with:
+          install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20210604_8e6ee1b/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: nix develop -c make lint
+        env:
+          LINT_ARGS: --out-format=github-actions
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v14
+        with:
+          install_url: https://github.com/numtide/nix-flakes-installer/releases/download/nix-2.4pre20210604_8e6ee1b/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build
+        run: nix shell -c make build
+
+      - name: Test
+        run: nix shell -c make test
+
+      - name: Test proto
+        run: nix shell -c make testproto
+
+      - name: Annotate tests
+        uses: guyarb/golang-test-annotations@v0.4.0
+        if: always()
+        with:
+          test-results: build/test.json

@@ -9,8 +9,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      GOFLAGS: -mod=readonly
 
     steps:
       - name: Set up Go
@@ -24,6 +22,6 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
-          version: v0.127.0
+          version: v0.179.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
