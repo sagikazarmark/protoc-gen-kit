@@ -45,13 +45,13 @@ jobs:
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
       - name: Build
-        run: nix shell -c make build
+        run: nix develop -c make build
 
       - name: Test
-        run: nix shell -c make test
+        run: nix develop -c make test
 
       - name: Test proto
-        run: nix shell -c make testproto
+        run: nix develop -c make testproto
 
       - name: Annotate tests
         uses: guyarb/golang-test-annotations@v0.4.0
