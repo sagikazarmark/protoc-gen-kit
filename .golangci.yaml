@@ -1,0 +1,12 @@
+linters-settings:
+    golint:
+        min-confidence: 0.1
+    goimports:
+        local-prefixes: github.com/sagikazarmark/protoc-gen-kit
+
+linters:
+    presets:
+        - bugs
+        - unused
+        - format
+        - import

@@ -12,7 +12,8 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion6
+// Requires gRPC-Go v1.32.0 or later.
+const _ = grpc.SupportPackageIsVersion7
 
 // TestServiceClient is the client API for TestService service.
 //
@@ -50,25 +51,36 @@ func (c *testServiceClient) SubestProcedure(ctx context.Context, in *subtest.Sub
 }
 
 // TestServiceServer is the server API for TestService service.
+// All implementations must embed UnimplementedTestServiceServer
+// for forward compatibility
 type TestServiceServer interface {
 	// TestProcedure is here for the sake of testing comments.
 	TestProcedure(context.Context, *TestProcedureRequest) (*TestProcedureResponse, error)
 	SubestProcedure(context.Context, *subtest.SubtestProcedureRequest) (*subtest.SubtestProcedureResponse, error)
+	mustEmbedUnimplementedTestServiceServer()
 }
 
-// UnimplementedTestServiceServer can be embedded to have forward compatible implementations.
+// UnimplementedTestServiceServer must be embedded to have forward compatible implementations.
 type UnimplementedTestServiceServer struct {
 }
 
-func (*UnimplementedTestServiceServer) TestProcedure(context.Context, *TestProcedureRequest) (*TestProcedureResponse, error) {
+func (UnimplementedTestServiceServer) TestProcedure(context.Context, *TestProcedureRequest) (*TestProcedureResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method TestProcedure not implemented")
 }
-func (*UnimplementedTestServiceServer) SubestProcedure(context.Context, *subtest.SubtestProcedureRequest) (*subtest.SubtestProcedureResponse, error) {
+func (UnimplementedTestServiceServer) SubestProcedure(context.Context, *subtest.SubtestProcedureRequest) (*subtest.SubtestProcedureResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubestProcedure not implemented")
 }
+func (UnimplementedTestServiceServer) mustEmbedUnimplementedTestServiceServer() {}
 
-func RegisterTestServiceServer(s *grpc.Server, srv TestServiceServer) {
-	s.RegisterService(&_TestService_serviceDesc, srv)
+// UnsafeTestServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to TestServiceServer will
+// result in compilation errors.
+type UnsafeTestServiceServer interface {
+	mustEmbedUnimplementedTestServiceServer()
+}
+
+func RegisterTestServiceServer(s grpc.ServiceRegistrar, srv TestServiceServer) {
+	s.RegisterService(&TestService_ServiceDesc, srv)
 }
 
 func _TestService_TestProcedure_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -107,7 +119,10 @@ func _TestService_SubestProcedure_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-var _TestService_serviceDesc = grpc.ServiceDesc{
+// TestService_ServiceDesc is the grpc.ServiceDesc for TestService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var TestService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "test.v1.TestService",
 	HandlerType: (*TestServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
