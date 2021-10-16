@@ -1,6 +1,6 @@
 # Go Kit Protoc Compiler
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sagikazarmark/todobackend-go-kit/CI?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sagikazarmark/protoc-gen-kit/CI?style=flat-square)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sagikazarmark/protoc-gen-kit?style=flat-square)](https://goreportcard.com/report/github.com/sagikazarmark/protoc-gen-kit)
 [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/mod/github.com/sagikazarmark/protoc-gen-kit)
 [![built with nix](https://img.shields.io/badge/builtwith-nix-7d81f7?style=flat-square)](https://builtwithnix.org)
