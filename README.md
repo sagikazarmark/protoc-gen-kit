@@ -35,4 +35,4 @@ Alternatively, install Go manually or using a package manager. Install the rest 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).
