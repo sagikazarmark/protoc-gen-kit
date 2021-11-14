@@ -20,5 +20,6 @@
             protoc-gen-go
             protoc-gen-go-grpc
           ];
-      in { devShell = pkgs.mkShell { buildInputs = devDeps; }; });
+      in
+      { devShell = pkgs.mkShell { buildInputs = devDeps; }; });
 }
