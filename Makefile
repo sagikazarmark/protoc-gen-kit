@@ -34,7 +34,6 @@ test: ## Run tests
 testproto: build
 	protoc -I test --plugin=build/protoc-gen-kit --go_out=paths=source_relative:test/ --go-grpc_out=paths=source_relative:test/ --kit_out=paths=source_relative:test/ test/test.proto test/subtest/subtest.proto
 
-
 .PHONY: lint
 lint: ## Run linter
 	golangci-lint run ${LINT_ARGS}
