@@ -50,7 +50,7 @@ jobs:
         run: nix develop -c make testproto
 
       - name: Annotate tests
-        uses: guyarb/golang-test-annotations@v0.5.1
+        uses: guyarb/golang-test-annotations@v0.6.0
         if: always()
         with:
           test-results: build/test.json
