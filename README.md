@@ -1,3 +1,6 @@
+> # ⚠ Project moved
+> The project has been moved to a new place: https://github.com/sagikazarmark/protoc-gen-go-kit
+
 # Go Kit Protoc Compiler
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/sagikazarmark/protoc-gen-kit/CI?style=flat-square)
